@@ -4,8 +4,11 @@
       <h1 class="title">
         Project Board
       </h1>
+      <button @click="addStatus()" v-if="statuses.length == 0" class="bg-green-700 text-white text-lg mt-8 px-4 py-2 rounded-lg transition hover:bg-green-900">
+          Create New
+      </button>
       <div class="flex flex-row flex-wrap">
-        <StatusCol v-for="status in statuses" :key="status"/>
+        <StatusCol v-for="(status, idx) in statuses" :key="status" :addStatusFn="() => addStatus(idx + 1)"/>
       </div>
     </div>
   </div>
@@ -14,18 +17,27 @@
 <script>
 import { v4 as uuidv4 } from 'uuid';
 export default {
-  methods: {
-    id() {
-      return uuidv4();
-    }
-  },
   mounted() {
-    this.statuses = JSON.parse(localStorage.getItem('statuses'));
+    this.statuses = JSON.parse(localStorage.getItem('statuses')) || [];
   },
   data() {
     return {
       statuses: []
     };
+  },
+  methods: {
+    addStatus(index = 0) {
+      console.log("clicked");
+      let status = {
+        title: 'status',
+        color: '#C8C8C8',
+        cards: []
+      }
+      let uuid = uuidv4();
+      localStorage.setItem(uuid, JSON.stringify(status));
+      this.statuses.splice(index, 0, uuid);
+      localStorage.setItem('statuses', JSON.stringify(this.statuses));
+    }
   }
 }
 </script>

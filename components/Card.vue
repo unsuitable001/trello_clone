@@ -11,7 +11,7 @@ export default {
     props: ['content', 'status'],
     data() {
         return {
-            cardUrl: `/${this.status}/cards/${this.$vnode.key}`
+            cardUrl: `/cards/${this.$vnode.key}`
         }
     }
 }
