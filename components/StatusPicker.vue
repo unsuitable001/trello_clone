@@ -10,12 +10,6 @@
 import StatusBtn from './StatusBtn.vue'
 export default {
   components: { StatusBtn },
-    props: ['toggle', 'statuses', 'alterStatus'],
-    data() {
-        return {
-        }
-    },
-    methods: {
-    }
+    props: ['toggle', 'statuses', 'alterStatus']
 }
 </script>
