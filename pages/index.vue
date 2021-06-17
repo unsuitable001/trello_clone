@@ -8,7 +8,7 @@
           Create New
       </button>
       <div class="flex flex-row flex-wrap">
-        <StatusCol v-for="(status, idx) in statuses" :key="status" :addStatusFn="() => addStatus(idx + 1)"/>
+        <StatusCol v-for="(status, idx) in statuses" :key="status" :addStatusFn="() => addStatus(idx + 1)" @delete-status="removeStatus"/>
       </div>
     </div>
   </div>
@@ -37,6 +37,9 @@ export default {
       localStorage.setItem(uuid, JSON.stringify(status));
       this.statuses.splice(index, 0, uuid);
       localStorage.setItem('statuses', JSON.stringify(this.statuses));
+    },
+    removeStatus(status) {
+      this.statuses.splice(this.statuses.indexOf(status), 1);
     }
   }
 }

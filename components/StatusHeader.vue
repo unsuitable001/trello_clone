@@ -50,7 +50,7 @@ export default {
             let statuses = JSON.parse(localStorage.getItem('statuses'));
             statuses.splice(statuses.indexOf(this.$props.id),1);
             localStorage.setItem('statuses', JSON.stringify(statuses));
-            this.$router.go();
+            this.$emit('delete-status', this.$props.id);
         }
     }
 }

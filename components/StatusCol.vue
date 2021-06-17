@@ -4,7 +4,7 @@
     @drop.prevent
     @dragenter.prevent 
     @dragover.prevent>
-        <status-header :status="title" :count="cards.length" :addStatus="addStatusFn" :color="color" :id="$vnode.key"/>
+        <status-header :status="title" :count="cards.length" :addStatus="addStatusFn" :color="color" :id="$vnode.key" v-on="$listeners"/>
         <div class="overflow-y-auto h-96">
             <card v-for="card in cards" :key="card" :content="getCard(card)" 
             :status="$vnode.key" draggable="true" 
@@ -64,21 +64,16 @@ export default {
             event.dataTransfer.setData('cardID', card);
             event.dataTransfer.setData('oldStatus', this.$vnode.key);
             setTimeout(() => {this.cards.splice(this.cards.indexOf(card),1);}, 0);
-            console.log(card);
         },
         onDrop(event, status) {
             // console.log(status);
             let card = event.dataTransfer.getData('cardID');
             let oldStatus = event.dataTransfer.getData('oldStatus');
-            console.log(card)
             this.moveCard(card, oldStatus, status);
 
         },
         moveCard(card, src, dest) {
             if(src == dest) return;
-            console.log(card)
-            // console.log(src)
-            // console.log(dest)
             this.cards.push(card);
             let cardData = JSON.parse(localStorage.getItem(card));
             cardData.parent = dest;
