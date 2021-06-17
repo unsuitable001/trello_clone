@@ -4,11 +4,11 @@
             Edit Card
         </h1>
         <div class="container flex-col items-center">
-        <input class="m-4 p-2 font-extrabold text-5xl text-center" :class="pickingStatus ? 'opacity-60' : ''" v-model="title" placeholder="title">
-        <button @click="() => this.pickingStatus = true" class="m-4 mb-8 p-2 rounded-md" :class="pickingStatus ? 'opacity-60' : ''" :style="parentColor">{{parent}}</button>
-        <textarea placeholder="task description" class="text-center h-64" :class="pickingStatus ? 'opacity-60' : ''" v-model="description"></textarea>
+        <input class="m-4 p-2 font-extrabold text-5xl text-center" v-model="title" placeholder="title">
+        <button @click="() => this.pickingStatus = !this.pickingStatus" class="m-4 mb-8 p-2 rounded-md transition hover:opacity-80" :style="parentColor">{{parent}}</button>
         <status-picker v-if="pickingStatus" :alterStatus="scheduleMove" :statuses="statusList" :toggle="() => this.pickingStatus = false" class="bg-white shadow-2xl"/>
-        <div :class="pickingStatus ? 'opacity-60' : ''">
+        <textarea placeholder="task description" class="text-center h-64" v-model="description"></textarea>
+        <div>
             <button @click="updateCard()" class="bg-green-700 text-white text-lg mt-8 px-4 py-2 rounded-lg transition hover:bg-green-900">
                 save
             </button>
