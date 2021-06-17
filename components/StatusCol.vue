@@ -8,7 +8,8 @@
         <div class="overflow-y-auto h-96">
             <card v-for="card in cards" :key="card" :content="getCard(card)" 
             :status="$vnode.key" draggable="true" 
-            @dragstart.native="startDrag($event, card)"/>
+            @dragstart.native="startDrag($event, card)"
+            @dragend.native="cancelMove($event, card)" />
             <new-card @click.native="addCard()"/>
         </div>
     </div>
@@ -74,10 +75,7 @@ export default {
 
         },
         moveCard(card, src, dest) {
-            if(src == dest) {
-                this.cards.push(card);
-                return;
-            }
+            if(src == dest) return;
             console.log(card)
             // console.log(src)
             // console.log(dest)
@@ -93,6 +91,13 @@ export default {
             let newStatus = JSON.parse(localStorage.getItem(dest));
             newStatus.cards.push(card);
             localStorage.setItem(dest, JSON.stringify(newStatus));
+        },
+        cancelMove(event, card) {
+            let oldStatus = event.dataTransfer.getData('oldStatus');
+            let cardData = JSON.parse(localStorage.getItem(card));
+            if(cardData.parent == oldStatus) {
+                this.cards.push(card);
+            }
         }
     }
 }
