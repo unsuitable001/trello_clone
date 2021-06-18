@@ -66,7 +66,6 @@ export default {
             setTimeout(() => {this.cards.splice(this.cards.indexOf(card),1);}, 0);
         },
         onDrop(event, status) {
-            // console.log(status);
             let card = event.dataTransfer.getData('cardID');
             let oldStatus = event.dataTransfer.getData('oldStatus');
             this.moveCard(card, oldStatus, status);
@@ -88,11 +87,10 @@ export default {
             localStorage.setItem(dest, JSON.stringify(newStatus));
         },
         cancelMove(event, card) {
-            let oldStatus = event.dataTransfer.getData('oldStatus');
             let cardData = JSON.parse(localStorage.getItem(card));
-            if(cardData.parent == oldStatus) {
+            if(cardData.parent ==  this.$vnode.key) {   // patch for chrome
                 this.cards.push(card);
-            }
+            } 
         }
     }
 }
